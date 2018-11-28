@@ -32,26 +32,26 @@ The sample contains Java and Node.js modules. In reality, the RPC framework usua
 - Define consul config definitions to file "envoy\_demo.hcl"
   ```
   services {
-  	name = "client"
-  	port = 8080
-  	connect {
-  		sidecar_service {
-  			proxy {
-  				upstreams {
-  					destination_name = "echo"
-  					local_bind_port = 9191
-  				}
-  			}
-  		}
-  	}
+    name = "client"
+    port = 8080
+    connect {
+      sidecar_service {
+        proxy {
+          upstreams {
+            destination_name = "echo"
+            local_bind_port = 9191
+          }
+        }
+      }
+    }
   }
   
   services {
-  	name = "echo"
-  	port = 9090
-  	connect {
-  		sidecar_service {}
-  	}
+    name = "echo"
+    port = 9090
+    connect {
+      sidecar_service {}
+    }
   }
   ```
 
