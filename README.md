@@ -20,10 +20,8 @@ The sample contains Java and Node.js modules. In reality, the RPC framework usua
 ### Quick Start
 
 - Prerequisites 
-  - Java
-  - Node.js
-  - Gradle
-  - envoy executable binary
+  - Envoy executable binary(following the [guide](https://github.com/envoyproxy/envoy/tree/master/ci) for a developer build)
+  - socat is installed
 
 - Launch a TCP echo server with socat
 
@@ -109,7 +107,7 @@ All of service instances are using dynamic ports in this sample to demonstrate t
   - Java
   - Node.js
   - Gradle
-	- Envoy executable binary(following the [guide](https://github.com/envoyproxy/envoy/tree/master/ci) for a developer build)
+  - Envoy executable binary(following the [guide](https://github.com/envoyproxy/envoy/tree/master/ci) for a developer build)
 
 - Git clone the project
 
@@ -155,72 +153,71 @@ All of service instances are using dynamic ports in this sample to demonstrate t
 
 	In VM
 	```shell
-	cd /vagrant/bin
+  cd /vagrant/bin
 	./start_all_jobs.sh
 	```
 
 	```
   {
-  	"name": "add-svc-proxy",
-  		"kind": "connect-proxy",
-  		"proxy": {
-  			"destination_service_name": "add-svc",
-  			"local_service_address": "10.10.10.150",
-  			"local_service_port": 9090
-  		},
-  		"port": 21000
-  }
-
-	```
-
-	```
-  {
-  	"name": "sub-svc-proxy",
-  		"kind": "connect-proxy",
-  		"proxy": {
-  			"destination_service_name": "sub-svc",
-  			"local_service_address": "10.10.10.150",
-  			"local_service_port": 8080
-  		},
-  		"port": 21001
+    "name": "add-svc-proxy",
+    "kind": "connect-proxy",
+    "proxy": {
+       "destination_service_name": "add-svc",
+       "local_service_address": "10.10.10.150",
+       "local_service_port": 9090
+     },
+     "port": 21000
   }
 	```
 
 	```
   {
-  	"name": "add-svc-ref-proxy",
-  		"kind": "connect-proxy",
-  		"proxy": {
-  			"destination_service_name": "frontend",
-  			"local_service_address": "10.10.10.150",
-  			"local_service_port": 7070,
-  			"upstreams": [{
-  				"destination_type": "service",
-  				"destination_name": "add-svc",
-  				"local_bind_address": "127.0.0.1",
-  				"local_bind_port": 9191
-  			}]
-  		},
-  		"port": 21002
+    "name": "sub-svc-proxy",
+    "kind": "connect-proxy",
+    "proxy": {
+      "destination_service_name": "sub-svc",
+      "local_service_address": "10.10.10.150",
+      "local_service_port": 8080
+    },
+    "port": 21001
+  }
+	```
+
+	```
+  {
+    "name": "add-svc-ref-proxy",
+    "kind": "connect-proxy",
+    "proxy": {
+       "destination_service_name": "frontend",
+       "local_service_address": "10.10.10.150",
+       "local_service_port": 7070,
+       "upstreams": [{
+          "destination_type": "service",
+          "destination_name": "add-svc",
+          "local_bind_address": "127.0.0.1",
+          "local_bind_port": 9191
+        }]
+     },
+	   "port": 21002
   }
 	```
 
 	```
 	{
-		"name": "sub-svc-ref-proxy",
-			"kind": "connect-proxy",
-			"proxy": {
-				"destination_service_name": "frontend",
-				"local_service_address": "10.10.10.150",
-				"local_service_port": 7070,
-				"upstreams": [{
-					"destination_type": "service",
-					"destination_name": "sub-svc",
-					"local_bind_address": "127.0.0.1",
-					"local_bind_port": 8181
-				}]
-			},
-			"port": 21003
+    "name": "sub-svc-ref-proxy",
+    "kind": "connect-proxy",
+    "proxy": {
+       "destination_service_name": "frontend",
+       "local_service_address": "10.10.10.150",
+       "local_service_port": 7070,
+       "upstreams": [{
+          "destination_type": "service",
+          "destination_name": "sub-svc",
+          "local_bind_address": "127.0.0.1",
+          "local_bind_port": 8181
+        }]
+      },
+      "port": 21003
 	}
 	```
 

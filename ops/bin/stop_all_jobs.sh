@@ -18,6 +18,9 @@ $NOMAD_CMD job stop apiGatewayJob
 echo "Stopping hashiUI"
 $NOMAD_CMD job stop hashiUIJob
 
+echo "Stopping envoy proxies"
+$NOMAD_CMD job stop envoyJob 
+
 echo 'wait 5s...'
 sleep 5
 curl --request PUT  http://localhost:4646/v1/system/gc

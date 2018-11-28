@@ -1,4 +1,4 @@
-job "envoy-job" {
+job "envoyJob" {
   region = "bj"
   datacenters = ["dc-dev-01"]
   type = "service"
@@ -7,7 +7,7 @@ job "envoy-job" {
     value     = "linux"
   }
 
-  group "envoy-group" {
+  group "envoyGroup" {
     count = 1 
 
     task "addsvc-envoy-task" {
