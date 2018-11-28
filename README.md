@@ -11,7 +11,7 @@ The sample contains Java and Node.js modules. In reality, the RPC framework usua
 
 ### Overview
 
-![PoC Scenario Overview](./docs/architecture-servicemesh-components.png)
+![PoC Scenario Overview](./docs/architecture-servicemesh-envoy-components.png)
 
 ### Sidecar Tasks 
 
