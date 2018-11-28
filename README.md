@@ -23,7 +23,7 @@ The sample contains Java and Node.js modules. In reality, the RPC framework usua
   - Java
   - Node.js
   - Gradle
-	- envoy executable binary
+  - envoy executable binary
 
 - Launch a TCP echo server with socat
 
@@ -66,15 +66,16 @@ The sample contains Java and Node.js modules. In reality, the RPC framework usua
 
   - Inbound
 
-	```bash
+  ```bash
   /opt/consul/bin/consul connect envoy -sidecar-for echo -admin-bind localhost:19000 -bootstrap > ./bootstrap_echo.json 
-	/opt/envoy/bin/envoy --v2-config-only --config-path ./bootstrap_echo.json --disable-hot-restart -l debug
-	```
+  /opt/envoy/bin/envoy --v2-config-only --config-path ./bootstrap_echo.json --disable-hot-restart -l debug
+  ```
+
   Alternative	
 
-	```bash
+  ```bash
   /opt/consul/bin/consul connect envoy -sidecar-for echo -admin-bind localhost:19000 -envoy-binary=/opt/envoy/bin/envoy -- -l debug
-	```
+  ```
 
 	- Outbound
 
@@ -108,7 +109,7 @@ All of service instances are using dynamic ports in this sample to demonstrate t
   - Java
   - Node.js
   - Gradle
-	- envoy executable binary
+	- Envoy executable binary(following the [guide](https://github.com/envoyproxy/envoy/tree/master/ci) for a developer build)
 
 - Git clone the project
 
@@ -239,4 +240,4 @@ All of service instances are using dynamic ports in this sample to demonstrate t
 
 #### Result of Service Discovery and Load Balance
 
-![loadbalance-result](./docs/loadbalance-result.png)
+![click-run-result](./docs/click-run-result.png)
