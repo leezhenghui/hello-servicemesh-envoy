@@ -1,0 +1,32 @@
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion") {
+		exclude module: 'spring-boot-starter-tomcat'
+	}
+	compile("org.springframework.boot:spring-boot-starter-jetty:$springBootVersion")
+
+	compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
+	compile project(":ifw.lib")
+
+	compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
+
+	compile("org.springframework.cloud:spring-cloud-starter-consul-all:$springCloudVersion")
+
+	testCompile("junit:junit:$junitVersion")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+apply plugin: 'org.springframework.boot'
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java']
+		}
+	}
+
+	test {
+		java {
+			srcDirs = ['src/test/java']
+		}
+	}
+}

@@ -1,0 +1,17 @@
+logs_dir: /data/consul/logs
+data_dir: /data/consul/data
+config_dir: /opt/consul/conf
+
+consul_version: 1.4.0
+consul_archive: "consul_{{ consul_version }}_linux_amd64.zip"
+consul_download: "https://releases.hashicorp.com/consul/{{ consul_version }}/{{ consul_archive }}"
+consul_download_username: ""
+consul_download_password: ""
+consul_download_folder: /vagrant/deps
+consul_home: /opt/consul
+consul_move_to: /opt/consul/bin
+consul_domain: "intra"
+
+files: [
+  { src: 'consul', dest: '/opt/consul/bin/consul', mode: '0755' },
+]

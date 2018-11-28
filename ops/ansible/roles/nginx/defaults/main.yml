@@ -1,0 +1,16 @@
+config_file: nginx.conf
+api_gateway_upstream_conf_file: api_gateway_upstream.conf
+external_server_conf_file: external_server.conf 
+
+nginx_version: release-1.9.15
+nginx_src: /opt/nginx-src
+nginx_bin_dir: "/opt/nginx-{{ nginx_version }}"
+nginx_conf_autogen_dir: "{{ nginx_bin_dir}}/conf/auto_gen"
+nginx_git_repo: "https://github.com/nginx/nginx.git"
+
+nginx_sbin_path: "{{ nginx_bin_dir }}/sbin/nginx"
+nginx_conf_path: "{{ nginx_bin_dir }}/conf/nginx.conf"
+
+ngx_upsync_module_git_repo: "https://github.com/leezhenghui/ngx_upsync_module.git"
+ngx_upsync_module_src: "/opt/ngx-upsync-module-src"
+

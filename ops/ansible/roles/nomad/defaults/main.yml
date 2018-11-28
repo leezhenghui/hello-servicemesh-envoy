@@ -1,0 +1,13 @@
+config_dir: /opt/nomad/conf
+logs_dir: /data/nomad/logs
+alloc_data_dir: /data/nomad/data
+config_file: nomad.dev.conf
+
+nomad_version: 0.8.6
+nomad_archive: "nomad_{{ nomad_version }}_linux_amd64.zip"
+nomad_download: "https://releases.hashicorp.com/nomad/{{ nomad_version }}/{{ nomad_archive }}"
+nomad_download_username: ""
+nomad_download_password: ""
+nomad_download_folder: /vagrant/deps
+nomad_home: /opt/nomad
+nomad_move_to: /opt/nomad/bin

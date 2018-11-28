@@ -1,0 +1,7 @@
+- hosts: localhost
+  remote_user: vagrant
+  serial: 1
+  roles:
+    - common
+    - hashi-ui-installer 
+  become: true

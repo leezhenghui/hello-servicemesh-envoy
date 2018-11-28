@@ -1,0 +1,240 @@
+{
+    "_nomad-client-praunnsg5bivpz5a7fylddvby4mgwe6g": {
+        "ID": "_nomad-client-praunnsg5bivpz5a7fylddvby4mgwe6g",
+        "Service": "nomad-client",
+        "Tags": [
+            "http"
+        ],
+        "Meta": {},
+        "Port": 4646,
+        "Address": "10.0.2.15",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "_nomad-server-2mdkm264h5kk2niu27ottsapi6yrddjm": {
+        "ID": "_nomad-server-2mdkm264h5kk2niu27ottsapi6yrddjm",
+        "Service": "nomad",
+        "Tags": [
+            "rpc"
+        ],
+        "Meta": {},
+        "Port": 4647,
+        "Address": "10.0.2.15",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "_nomad-server-j6dw3aszh5kk5sx5jgbhtdc6be5o3g7p": {
+        "ID": "_nomad-server-j6dw3aszh5kk5sx5jgbhtdc6be5o3g7p",
+        "Service": "nomad",
+        "Tags": [
+            "serf"
+        ],
+        "Meta": {},
+        "Port": 4648,
+        "Address": "10.0.2.15",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "_nomad-server-qdvusq2ij6du7wkite67nkdyuechtzkc": {
+        "ID": "_nomad-server-qdvusq2ij6du7wkite67nkdyuechtzkc",
+        "Service": "nomad",
+        "Tags": [
+            "http"
+        ],
+        "Meta": {},
+        "Port": 4646,
+        "Address": "10.0.2.15",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "_nomad-task-5wn4ljpdjfca6faobwck5hna5uawzw6s": {
+        "ID": "_nomad-task-5wn4ljpdjfca6faobwck5hna5uawzw6s",
+        "Service": "api-gateway",
+        "Tags": [
+            "spring-boot",
+            "java",
+            "gateway"
+        ],
+        "Meta": {},
+        "Port": 2809,
+        "Address": "10.10.10.150",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "_nomad-task-6rjo2rsp7undh3w5qozlr2qnsljyced7": {
+        "ID": "_nomad-task-6rjo2rsp7undh3w5qozlr2qnsljyced7",
+        "Service": "add-svc",
+        "Tags": [
+            "spring-boot",
+            "java",
+            "internal-service"
+        ],
+        "Meta": {},
+        "Port": 9090,
+        "Address": "10.10.10.150",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "_nomad-task-a7kut6woztxngbxxdhkj4jc6qm5ofjxj": {
+        "ID": "_nomad-task-a7kut6woztxngbxxdhkj4jc6qm5ofjxj",
+        "Service": "frontend",
+        "Tags": [
+            "node.js",
+            "edge-service"
+        ],
+        "Meta": {},
+        "Port": 7070,
+        "Address": "10.10.10.150",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "_nomad-task-mpt36dcw7ykik6qtxnl5lw46zrezk3sc": {
+        "ID": "_nomad-task-mpt36dcw7ykik6qtxnl5lw46zrezk3sc",
+        "Service": "hashi-ui",
+        "Tags": [],
+        "Meta": {},
+        "Port": 3000,
+        "Address": "10.10.10.150",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "_nomad-task-myo3x6b3ieqbnx5jhkkafiafrfqwmgpr": {
+        "ID": "_nomad-task-myo3x6b3ieqbnx5jhkkafiafrfqwmgpr",
+        "Service": "sub-svc",
+        "Tags": [
+            "spring-boot",
+            "java",
+            "internal-service"
+        ],
+        "Meta": {},
+        "Port": 8080,
+        "Address": "10.10.10.150",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "add-svc-proxy": {
+        "Kind": "connect-proxy",
+        "ID": "add-svc-proxy",
+        "Service": "add-svc-proxy",
+        "Tags": [],
+        "Meta": {},
+        "Port": 21000,
+        "Address": "",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false,
+        "ProxyDestination": "add-svc",
+        "Proxy": {
+            "DestinationServiceName": "add-svc",
+            "LocalServiceAddress": "10.10.10.150",
+            "LocalServicePort": 9090,
+            "Upstreams": []
+        }
+    },
+    "add-svc-ref-proxy": {
+        "Kind": "connect-proxy",
+        "ID": "add-svc-ref-proxy",
+        "Service": "add-svc-ref-proxy",
+        "Tags": [],
+        "Meta": {},
+        "Port": 21002,
+        "Address": "",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false,
+        "ProxyDestination": "frontend",
+        "Proxy": {
+            "DestinationServiceName": "frontend",
+            "LocalServiceAddress": "10.10.10.150",
+            "LocalServicePort": 7070,
+            "Upstreams": [
+                {
+                    "DestinationType": "service",
+                    "DestinationName": "add-svc",
+                    "LocalBindAddress": "127.0.0.1",
+                    "LocalBindPort": 9191
+                }
+            ]
+        }
+    },
+    "sub-svc-proxy": {
+        "Kind": "connect-proxy",
+        "ID": "sub-svc-proxy",
+        "Service": "sub-svc-proxy",
+        "Tags": [],
+        "Meta": {},
+        "Port": 21001,
+        "Address": "",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false,
+        "ProxyDestination": "sub-svc",
+        "Proxy": {
+            "DestinationServiceName": "sub-svc",
+            "LocalServiceAddress": "10.10.10.150",
+            "LocalServicePort": 8080,
+            "Upstreams": []
+        }
+    },
+    "sub-svc-ref-proxy": {
+        "Kind": "connect-proxy",
+        "ID": "sub-svc-ref-proxy",
+        "Service": "sub-svc-ref-proxy",
+        "Tags": [],
+        "Meta": {},
+        "Port": 21003,
+        "Address": "",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false,
+        "ProxyDestination": "frontend",
+        "Proxy": {
+            "DestinationServiceName": "frontend",
+            "LocalServiceAddress": "10.10.10.150",
+            "LocalServicePort": 7070,
+            "Upstreams": [
+                {
+                    "DestinationType": "service",
+                    "DestinationName": "sub-svc",
+                    "LocalBindAddress": "127.0.0.1",
+                    "LocalBindPort": 8181
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,45 @@
+spring:
+  cloud:
+    consul:
+      config:
+        watch:
+          enabled: true
+      host: localhost
+      port: 8500
+      discovery:
+        register-health-check: true
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+  application:
+    name: sub-svc
+server:
+  port: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+---
+
+spring:
+  profiles: dev
+  cloud:
+    consul:
+      config:
+        watch:
+          enabled: true
+      host: localhost
+      port: 8500
+      discovery:
+        register: false
+  application:
+    name: sub-svc
+server:
+  port: ${NOMAD_PORT_http}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

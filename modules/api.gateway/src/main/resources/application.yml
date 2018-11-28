@@ -1,0 +1,40 @@
+hystrix.command.default:
+  execution.isolation:
+    thread.timeoutInMilliseconds: 126000
+    strategy: SEMAPHORE
+    semaphore.maxConcurrentRequests: 1000
+  fallback.isolation.semaphore.maxConcurrentRequests: 1000
+
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
+
+zuul:
+  host:
+    max-per-route-connections: 1000
+    max-total-connections: 1000
+  ribbon-isolation-strategy: SEMAPHORE
+  semaphore.max-semaphores: 1000
+
+---
+
+spring:
+  profiles: dev
+
+hystrix.command.default:
+  execution.isolation:
+    thread.timeoutInMilliseconds: 126000
+    strategy: SEMAPHORE
+    semaphore.maxConcurrentRequests: 1000
+  fallback.isolation.semaphore.maxConcurrentRequests: 1000
+
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
+
+zuul:
+  host:
+    max-per-route-connections: 1000
+    max-total-connections: 1000
+  ribbon-isolation-strategy: SEMAPHORE
+  semaphore.max-semaphores: 1000

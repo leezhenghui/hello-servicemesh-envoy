@@ -1,0 +1,126 @@
+- name: Installing NGINX Dependencies
+  become: yes
+  apt:
+    name: ['libssl-dev', 'zlib1g-dev', 'libpcre3', 'libpcre3-dev', 'unzip'] 
+    update_cache: yes
+
+- name: check ngx_src stat
+  stat: path={{ nginx_src }}
+  register: ngx_src_stat
+  tags: [nginx]
+
+- name: Clone Nginx source code
+  git:
+    repo: "{{ nginx_git_repo }}"
+    dest: "{{ nginx_src }}"
+    clone: yes
+    version: "{{ nginx_version }}"
+    update: no
+  when: ngx_src_stat.stat.exists == False
+  tags: [nginx]
+
+- name: check upsync_src stat
+  stat: path={{ ngx_upsync_module_src }}
+  register: upsync_src_stat
+  tags: [nginx]
+
+- name: Clone upsync source code
+  git:
+    repo: "{{ ngx_upsync_module_git_repo }}"
+    dest: "{{ ngx_upsync_module_src }}"
+    clone: yes
+    update: no
+  when: upsync_src_stat.stat.exists == False
+  tags: [nginx]
+
+- name: check nginx_bin stat
+  stat: path={{ nginx_bin_dir }}
+  register: ngx_bin_stat
+  tags: [nginx]
+
+- name: Configuring NGINX source with custom modules
+  command: "./auto/configure --prefix={{ nginx_bin_dir }} --with-http_stub_status_module --with-http_ssl_module --add-module={{ ngx_upsync_module_src }} --with-debug"
+  args:
+    chdir: "{{ nginx_src }}"
+  when: ngx_bin_stat.stat.exists == False
+  register: nginx_configured
+  tags: [nginx]
+
+- name: Installing NGINX
+  become: yes
+  shell: make && make install
+  args:
+    chdir: "{{ nginx_src }}"
+  when: nginx_configured 
+  register: nginx_installed
+  tags: [nginx]
+
+- name : Copy nginx main conf file
+  copy:
+    src: "{{ config_file }}"
+    dest: "{{ nginx_conf_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: nginx_installed
+  tags: [nginx]
+
+- name : Copy nginx upstream conf file
+  copy:
+    src: "{{ api_gateway_upstream_conf_file }}"
+    dest: "{{ nginx_bin_dir }}/conf/{{ api_gateway_upstream_conf_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: nginx_installed
+  tags: [nginx]
+
+- name : Copy nginx external server conf file
+  copy:
+    src: "{{ external_server_conf_file }}"
+    dest: "{{ nginx_bin_dir }}/conf/{{ external_server_conf_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: nginx_installed
+  tags: [nginx]
+
+- name: check nginx_autogen_conf stat
+  stat: path={{ nginx_conf_autogen_dir }}
+  register: ngx_conf_autogen_stat
+  tags: [nginx]
+
+- name: Create autogen conf dir 
+  become: yes
+  shell: "mkdir -p {{ nginx_conf_autogen_dir }} && touch  {{ nginx_conf_autogen_dir}}/api_gateway.conf"
+  when: ngx_conf_autogen_stat.stat.exists == False
+  tags: [nginx]
+
+- name: Stop nginx 
+  shell: killall nginx 
+  ignore_errors: yes
+  changed_when: false
+  tags: [nginx]
+
+- name : Starting nginx 
+  become: yes 
+  command: "{{ nginx_sbin_path }} -c {{ nginx_conf_path }}"
+  args:
+    chdir: "{{ nginx_bin_dir }}"
+  tags: [nginx]
+
+- name: Check if nginx is running
+  shell: ps aux | grep "nginx" | grep -v grep
+  ignore_errors: yes
+  changed_when: false
+  register: service_nginx_status
+  tags: [nginx]
+
+- name: Report status of nginx 
+  fail:
+    msg: |
+      Nginx is not running.
+      Return code from `grep`:
+      {{ service_nomad_status.rc }}
+  when: service_nginx_status.rc != 0
+  tags: [nginx]

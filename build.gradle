@@ -1,0 +1,77 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		jcenter()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+
+}
+
+allprojects  {
+  	group = 'hello.servicemesh'
+  	version = '1.0.0'
+	  buildDir = 'out'
+}
+
+subprojects {
+  	apply plugin: 'java'
+		apply plugin: 'idea'
+  	sourceCompatibility = 1.8
+  	targetCompatibility = 1.8
+
+  	repositories {
+    	mavenLocal()
+    	mavenCentral()
+			jcenter()
+  	}
+}
+
+apply plugin: 'distribution'
+
+def frontendDistDir = project(':frontend').file('out/distributions')
+
+def File deployLibsDir= file('ops/dist/public/pkgs')
+
+task deployLibs(type: Copy) {
+
+	from(project(':add.svc').libsDir) {
+		include '**/*.jar'
+	}
+
+	from(project(':sub.svc').libsDir) {
+		include '**/*.jar'
+	}
+	
+	from(project(':api.gateway').libsDir) {
+		include '**/*.jar'
+	}
+	
+	from(frontendDistDir) {
+		include '**/*.zip'
+	}
+
+	into(deployLibsDir)
+}
+
+clean.doLast {
+	file('ops/dist').deleteDir()
+}
+
+task buildAll() {
+	dependsOn 'sub.svc:build'
+	dependsOn 'add.svc:build'
+	dependsOn 'api.gateway:build'
+	dependsOn 'frontend:distZip'
+}
+
+task deploy() {
+	dependsOn 'clean'
+	dependsOn 'buildAll'
+  dependsOn 'deployLibs'
+
+	tasks.findByName('build').mustRunAfter 'clean'
+	tasks.findByName('deployLibs').mustRunAfter 'build'
+}

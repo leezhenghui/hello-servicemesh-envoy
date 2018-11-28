@@ -1,0 +1,12 @@
+rootProject.name = 'hello.servicemesh.envoy'
+include ':add.svc'
+include ':sub.svc'
+include ':ifw.lib'
+include ':frontend'
+include ':api.gateway'
+
+project(':add.svc').projectDir = "$rootDir/modules/add.svc" as File
+project(':sub.svc').projectDir = "$rootDir/modules/sub.svc" as File
+project(':ifw.lib').projectDir = "$rootDir/modules/ifw.lib" as File
+project(':frontend').projectDir = "$rootDir/modules/frontend" as File
+project(':api.gateway').projectDir = "$rootDir/modules/api.gateway" as File

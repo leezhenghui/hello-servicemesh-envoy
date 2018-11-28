@@ -1,0 +1,41 @@
+apply plugin: 'distribution'
+
+def File bin_dir = file('bin')
+def File node_modules_dir = file('node_modules')
+def File routes_dir = file('routes')
+def File services_dir = file('services')
+def File appjs = file('app.js')
+def File pkg = file('package.json')
+
+distributions {
+  main {
+		baseName = archivesBaseName
+		contents {
+			into ('bin') {
+			  from {bin_dir}
+			}
+
+			into ('node_modules') {
+			  from {node_modules_dir}
+			}
+			
+			into ('routes') {
+			  from {routes_dir}
+			}
+			
+			into ('services') {
+			  from {services_dir}
+			}
+
+			into('.') {
+				from {appjs}
+			}
+			
+			into('.') {
+				from {pkg}
+			}
+
+			includeEmptyDirs = true 
+		}
+	}	
+}

@@ -1,0 +1,13 @@
+hashi_ui_version: v1.0.0
+
+hashi_ui_archive: "hashi-ui-linux-amd64"
+hashi_ui_download: "https://github.com/jippi/hashi-ui/releases/download/{{ hashi_ui_version }}/hashi-ui-linux-amd64"
+hashi_ui_download_username: ""
+hashi_ui_download_password: ""
+hashi_ui_download_folder: /vagrant/deps
+hashi_ui_home: /usr/local/bin/hashi-ui-linux-amd64 
+hashi_ui_move_to: /usr/local/bin
+
+files: [                                                                                                               
+  { src: 'hashi-ui-linux-amd64', dest: '/usr/local/bin/hashi-ui-linux-amd64', mode: '0755' },                                                      
+] 

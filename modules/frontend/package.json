@@ -1,0 +1,28 @@
+{
+  "name": "hello.msaporxy.frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "DEBUG=* NODE_ENV=development node --abort-on-uncaught-exception app.js",
+    "clean": "echo 'do nothing right now'",
+    "install": "npm update && npm rebuild",
+    "codegen": "echo 'do nothing right now'",
+    "build": "echo 'do nothing right now'",
+    "clean:prod": "npm run clean",
+    "install:prod": "npm run install",
+    "codegen:prod": "npm run codegen",
+    "build:prod": "npm run build",
+    "start:prod": "NODE_ENV=production node --abort-on-uncaught-exception app.js",
+    "start:dev": "DEBUG=* NODE_ENV=production node --abort-on-uncaught-exception app.js"
+  },
+  "dependencies": {
+    "body-parser": "1.18.2",
+    "commander": "2.19.0",
+    "cookie-parser": "1.4.3",
+    "debug": "3.1.0",
+    "express": "4.16.3",
+    "express-policyrouter": "git+https://github.com/Endoscopy/express-policyrouter.git",
+    "q": "1.5.1",
+    "superagent": "4.0.0"
+  }
+}

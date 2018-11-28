@@ -1,0 +1,16 @@
+**/out/*
+# !**/out/libs
+**/dist/*
+*.swp
+*.swo
+.gradle
+.idea
+!gradle/wrapper/gradle-wrapper.jar
+.gradletasknamecache
+ops/ubuntu-xenial-16.04-cloudimg-console.log
+ops/.vagrant
+ops/**/*.nmon
+ops/deps/
+**/node_modules
+**/package-lock.json
+ops/ansible/*.retry

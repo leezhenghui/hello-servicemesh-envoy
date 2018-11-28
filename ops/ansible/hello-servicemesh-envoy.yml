@@ -1,0 +1,13 @@
+- hosts: localhost
+  remote_user: vagrant
+  serial: 1
+  roles:
+    - common
+    - java
+    - consul
+    - nomad
+    - hashi-ui-installer
+    - nginx
+    - node
+    - wrk
+  become: true

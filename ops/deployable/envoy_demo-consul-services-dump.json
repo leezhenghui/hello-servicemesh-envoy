@@ -1,0 +1,78 @@
+{
+    "client": {
+        "ID": "client",
+        "Service": "client",
+        "Tags": [],
+        "Meta": {},
+        "Port": 8080,
+        "Address": "",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "client-sidecar-proxy": {
+        "Kind": "connect-proxy",
+        "ID": "client-sidecar-proxy",
+        "Service": "client-sidecar-proxy",
+        "Tags": [],
+        "Meta": {},
+        "Port": 21000,
+        "Address": "",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false,
+        "ProxyDestination": "client",
+        "Proxy": {
+            "DestinationServiceName": "client",
+            "DestinationServiceID": "client",
+            "LocalServiceAddress": "127.0.0.1",
+            "LocalServicePort": 8080,
+            "Upstreams": [
+                {
+                    "DestinationType": "service",
+                    "DestinationName": "echo",
+                    "LocalBindPort": 9191
+                }
+            ]
+        }
+    },
+    "echo": {
+        "ID": "echo",
+        "Service": "echo",
+        "Tags": [],
+        "Meta": {},
+        "Port": 9090,
+        "Address": "",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false
+    },
+    "echo-sidecar-proxy": {
+        "Kind": "connect-proxy",
+        "ID": "echo-sidecar-proxy",
+        "Service": "echo-sidecar-proxy",
+        "Tags": [],
+        "Meta": {},
+        "Port": 21001,
+        "Address": "",
+        "Weights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "EnableTagOverride": false,
+        "ProxyDestination": "echo",
+        "Proxy": {
+            "DestinationServiceName": "echo",
+            "DestinationServiceID": "echo",
+            "LocalServiceAddress": "127.0.0.1",
+            "LocalServicePort": 9090,
+            "Upstreams": []
+        }
+    }
+}

@@ -1,0 +1,4 @@
+wrk_home: "/opt/wrk"
+wrk_git_repo: "https://github.com/wg/wrk.git"
+
+wrk_post_script: "calculator.lua"

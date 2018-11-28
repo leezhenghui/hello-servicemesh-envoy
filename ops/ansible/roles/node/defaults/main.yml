@@ -1,0 +1,5 @@
+node_version: v10.13.0
+node_src: /opt/node-src
+node_git_repo: "https://github.com/nodejs/node.git"
+
+node_sbin_path: "/usr/local/bin/node"

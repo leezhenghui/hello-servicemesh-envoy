@@ -1,0 +1,34 @@
+- name: nmon is present
+  apt:
+    name: nmon 
+    force: yes
+  tags: [benchmark]
+
+- name: check wrk home folder stat
+  stat: path={{ wrk_home }}
+  register: wrk_home_stat
+
+- name: git clone wrk
+  git: 
+    repo: "{{ wrk_git_repo }}"
+    dest: "{{ wrk_home }}"
+  register: wrk_was_downloaded
+  when: wrk_home_stat.stat.exists == False
+  tags: [benchmark]
+
+- name: check wrk stat
+  stat: path={{ wrk_home }}/wrk
+  register: wrk__stat
+
+- name: build wrk
+  shell: "make clean && make -j2"
+  args:
+    chdir: "{{ wrk_home }}"
+  when: wrk__stat.stat.exists == False
+  tags: [benchmark]
+
+- name: copy the wrk script 
+  copy:
+    src:  "{{ wrk_post_script }}" 
+    dest: "{{ wrk_home }}/scripts" 
+  tags: [benchmark]

@@ -1,0 +1,55 @@
+spring:
+  cloud:
+    consul:
+      config:
+        watch:
+          enabled: true
+      host: localhost
+      port: 8500
+      discovery:
+        register-health-check: true
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+  application:
+    name: api-gateway
+
+server:
+  port: 2809
+  tomcat:
+    accept-count: 1000
+    max-threads: 1000
+    max-connections: 2000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+---
+
+spring:
+  profiles: dev
+  cloud:
+    consul:
+      config:
+        watch:
+          enabled: true
+      host: localhost
+      port: 8500
+      discovery:
+        register: false
+  application:
+    name: api-gateway
+
+server:
+  port: ${NOMAD_PORT_http}
+  tomcat:
+    accept-count: 1000
+    max-threads: 1000
+    max-connections: 2000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

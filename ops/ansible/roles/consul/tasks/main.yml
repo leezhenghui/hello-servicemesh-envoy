@@ -1,0 +1,64 @@
+- name: create consul directory
+  file: >
+    state=directory
+    path={{ item }}
+  with_items:
+    - "{{ data_dir }}" 
+    - "{{ config_dir  }}" 
+    - "{{ logs_dir }}"
+    - "{{ consul_home }}"
+    - "{{ consul_move_to }}"
+  tags: [consul]
+
+- name: check archive stat
+  stat: path={{ consul_download_folder }}/{{ consul_archive }}
+  register: consul_archive_stat
+
+- name: download consul
+  get_url: >
+    url={{consul_download}}
+    dest={{consul_download_folder}}
+    url_username={{ consul_download_username }}
+    url_password={{ consul_download_password }}
+  register: consul_was_downloaded
+  when: consul_archive_stat.stat.exists == False
+  tags: [consul]
+
+- name: check bin stat
+  stat: path={{ consul_move_to}}/consul
+  register: consul_bin_stat
+
+- name: copy and unpack
+  unarchive: >
+    src={{ consul_download_folder }}/{{ consul_archive }}
+    dest={{ consul_move_to }}
+    remote_src=yes
+  when: consul_bin_stat.stat.exists == False
+  tags: [consul]
+
+- name: Start consul 
+  shell: "nohup {{ consul_move_to }}/consul agent -dev -ui \
+    -data-dir {{ data_dir }} \
+    -config-dir {{ config_dir }} \
+    -node={{ ansible_hostname }} \
+    -bind={{ ip }} \
+    -domain={{ consul_domain }} \
+    -client=0.0.0.0 \
+    >{{ logs_dir }}/consul.log 2>&1 &"
+  tags: [consul]
+
+- name: Check if consul is running
+  shell: ps aux | grep "consul agent" | grep -v grep
+  ignore_errors: yes
+  changed_when: false
+  register: service_consul_status
+  tags: [consul]
+
+- name: Report status of consul
+  fail:
+    msg: |
+      Consul is not running.
+      Return code from `grep`:
+      {{ service_consul_status.rc }}
+  when: service_consul_status.rc != 0
+  tags: [consul]

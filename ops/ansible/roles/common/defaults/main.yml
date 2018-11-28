@@ -1,0 +1,5 @@
+host_vars: [
+  { host_ip: "10.10.10.150", host_name: "hello-servicemesh-envoy"}
+]
+
+deps_home: /vagrant/deps

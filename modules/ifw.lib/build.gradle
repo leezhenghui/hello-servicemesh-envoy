@@ -1,0 +1,24 @@
+dependencies {
+
+	compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
+
+	compileOnly("org.springframework.kafka:spring-kafka:$springKafkaVersion")
+	compileOnly("org.springframework.data:spring-data-commons:$springDataVersion")
+
+	testCompile("junit:junit:$junitVersion")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java']
+		}
+	}
+
+	test {
+		java {
+			srcDirs = ['src/test/java']
+		}
+	}
+}

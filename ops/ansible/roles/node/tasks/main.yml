@@ -1,0 +1,34 @@
+- name: check node_src stat
+  stat: path={{ node_src }}
+  register: node_src_stat
+  tags: [node]
+
+- name: Clone node.js source code
+  git:
+    repo: "{{ node_git_repo }}"
+    dest: "{{ node_src }}"
+    clone: yes
+    version: "{{ node_version }}"
+    update: no
+  when: node_src_stat.stat.exists == False
+  tags: [node]
+
+- name: check node_sbin stat
+  stat: path={{ node_sbin_path }}
+  register: node_sbin_stat
+  tags: [node]
+
+- name: Configuring node.js source
+  shell: "make clean && ./configure"
+  args:
+    chdir: "{{ node_src }}"
+  when: node_sbin_stat.stat.exists == False
+  tags: [node]
+
+- name: Compiling and installing node.js 
+  become: yes
+  shell: make -j2 > ./out/build.log 2>&1 && make install
+  args:
+    chdir: "{{ node_src }}"
+  when: node_sbin_stat.stat.exists == False
+  tags: [node]

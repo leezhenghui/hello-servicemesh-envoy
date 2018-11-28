@@ -1,0 +1,22 @@
+- name: check archive stat
+  stat: path={{ hashi_ui_download_folder }}/{{ hashi_ui_archive }}
+  register: hashi_ui_archive_stat
+
+- name: download hashi_ui
+  get_url: >
+    url={{hashi_ui_download}}
+    dest={{hashi_ui_download_folder}}
+    url_username={{ hashi_ui_download_username }}
+    url_password={{ hashi_ui_download_password }}
+  register: hashi_ui_was_downloaded
+  when: hashi_ui_archive_stat.stat.exists == False
+  tags: [hashi_ui]
+
+- name: copy hashi-ui to /usr/local/bin
+  copy: 
+    src: "{{ hashi_ui_download_folder }}/{{ hashi_ui_archive }}"
+    dest: "{{ hashi_ui_move_to }}"
+    owner: root
+    group: root
+    mode: 0755
+  tags: [hashi_ui]

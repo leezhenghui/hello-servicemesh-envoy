@@ -1,0 +1,4 @@
+- name: Start the apps
+  command: "{{ deployable_home }}/start_all_jobs.sh"
+  tags: [jobs]
+
