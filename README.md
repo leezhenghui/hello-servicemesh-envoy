@@ -17,7 +17,9 @@ The sample contains Java and Node.js modules. In reality, the RPC framework usua
 
 ![Sidecar Pattern](./docs/architecture-sidecar-proxy-with-taskgroup.png)
 
-### Quick Start with a simple echo TCP
+> As nomad still not support to define a service with sidecar\_service in the task, for the time being, we use separate nomad job to declare sidecar service and bootstrap envoy. 
+
+### Quick Start with Helloworld Sample(TCP Echo)
 
 Before we get to the PoC sample, let's get a quick start on a simple tcp echo sample to help getting familiar with the consul connect envoy command, and unerstand what exactly it does under the hood.
 
@@ -177,7 +179,9 @@ Before we get to the PoC sample, let's get a quick start on a simple tcp echo sa
   	```
 
   > The `consule connect` envoy command actually launch envoy with two steps:
+	>
 	> [1] Generate a bootstrap config file for envoy
+	>
 	> [2] Launch envoy with the generated bootstrap config
 
 - Run a client on `9191` port
