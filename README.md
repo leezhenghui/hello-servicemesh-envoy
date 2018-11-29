@@ -99,7 +99,7 @@ The sample contains Java and Node.js modules. In reality, the RPC framework usua
 All of service instances are using dynamic ports in this sample to demonstrate the auto-scale features. 
 
 > 
-> By the time being, the service stanza does not support connect sidecar\_service definitions. so we do not have a easy way to enable dynamical port feature. In this sample, the ports for frontend, add-svc and sub-svc are static, and all of services are running with single instance, no replicated service instances running.
+> By the time of my writting the doc, envoy integration with nomad is still working in progress that’s far from being complete, and also, the service stanza does not support connect sidecar\_service definitions. so we do not have a easy way to enable dynamical port feature. In this sample, the ports assigned to frontend, add-svc and sub-svc are static, and all of services are running with single instance, no replicated service instances running.
 
 #### Steps
 
