@@ -78,7 +78,21 @@ class Stub {
         deadline: REQ_DEFAULT_TIMEOUT
       })
       request.then(res => {
-        defer.resolve({result: parseInt(res.text.trim())})
+				let reval = res.text;
+				let isFault = false;
+
+				try {
+					reval = parseInt(reval);
+				} catch (parseErr) {
+					debug('---> Invoke error response: ', res.text, res.status);
+					isFault = true;
+				}
+
+				if (! isFault) {
+					defer.resolve({result: reval})
+				} else {
+			    defer.reject({reason: reval});	
+				}
       }).catch(error => {
         if (error.errno && error.errno === 'ETIME')
           error = {
@@ -113,6 +127,11 @@ class Operator {
 
 	execute(l, r) {
 		const path = '/api/v1/execute/?l=' + l + '&r=' + r;
+		return this.opInvoker.invoke(Stub.METHOD_GET, path, null);
+	}
+	
+	executeWithFault() {
+		const path = '/api/v1/NOTEXISTMETHOD';
 		return this.opInvoker.invoke(Stub.METHOD_GET, path, null);
 	}
 

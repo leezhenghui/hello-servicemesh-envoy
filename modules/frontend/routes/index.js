@@ -123,4 +123,18 @@ policyRouter.post('/api/v1/compute', function(req, res, next) {
   name: 'api.v1.compute'
 });
 
+policyRouter.post('/api/v1/test/fault', function(req, res, next) {
+
+  addOp.executeWithFault().then(function(result) {
+		res.status(200).json(result);
+	}).fail(function(error) {
+		debug('Error: ', error);
+    res.status(500).json({
+	    details: error	
+		});	
+	});
+}, {
+  name: 'api.v1.test.fault'
+});
+
 module.exports = router;
